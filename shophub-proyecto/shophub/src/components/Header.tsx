@@ -40,12 +40,12 @@ export default function Header() {
         ShopHub
       </Link>
 
-      <Link href="/carrito" style={styles.cartIndicator}>
+      <p style={styles.cartIndicator}>
         🛒
         <span style={styles.cartCount}>
           {totalItems}
         </span>
-      </Link>
+      </p>
     </header>
   );
 }
