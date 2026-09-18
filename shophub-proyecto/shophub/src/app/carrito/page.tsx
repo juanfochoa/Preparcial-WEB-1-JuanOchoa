@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 
 export default function CartPage() {
-  const { cart, removeFromCart, clearCart, getTotal } = useCart();
+  const { cart, removeFromCart, clearCart, getTotal, getQuantity } = useCart();
 
   if (cart.length === 0) {
     return (
@@ -48,10 +48,13 @@ export default function CartPage() {
           </button>
         </div>
       ))}
-      
+
       <div style={styles.footer}>
         <p style={styles.total}>
           Total: ${getTotal().toFixed(2)}
+        </p>
+        <p style={styles.totalProductos}>
+          Cantidad total de productos: {getQuantity()}
         </p>
 
         <div style={styles.footerActions}>
@@ -64,6 +67,9 @@ export default function CartPage() {
 
           <Link href="/" style={styles.continueLink}>
             Seguir comprando
+          </Link>
+          <Link href="/checkout" style={styles.continueLink}>
+            Finalizar compra
           </Link>
         </div>
       </div>
@@ -145,6 +151,12 @@ const styles: Record<string, React.CSSProperties> = {
   },
   total: {
     fontSize: "22px",
+    fontWeight: 800,
+    color: "#ffffff",
+    margin: 0,
+  },
+  totalProductos: {
+    fontSize: "12px",
     fontWeight: 800,
     color: "#ffffff",
     margin: 0,

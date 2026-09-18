@@ -24,6 +24,7 @@ interface CartContextType {
   removeFromCart: (id: number) => void;
   clearCart: () => void;
   getTotal: () => number;
+  getQuantity: () => number;
 }
 
 // ------------------------------------------------------------
@@ -82,7 +83,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
- 
+  const getQuantity = (): number => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
   // El Provider envuelve a sus children y les pasa los valores
   // a través de la prop "value".
   return (
@@ -93,6 +97,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         removeFromCart,
         clearCart,
         getTotal,
+        getQuantity,
       }}
     >
       {children}

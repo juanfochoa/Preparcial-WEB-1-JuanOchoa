@@ -13,6 +13,7 @@
 
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { CheckoutProvider } from "@/context/CheckoutContext";
 import Header from "@/components/Header";
 
 // Metadata es una feature de Next.js para SEO (título, descripción)
@@ -35,17 +36,23 @@ export default function RootLayout({
           acceder al carrito usando useCart().
         */}
         <CartProvider>
-          {/* Header aparece en TODAS las páginas */}
-          <Header />
-
-          {/* 
-            main contiene el contenido de la página actual.
-            Este {children} cambia según la ruta, pero el
-            layout (Header + Provider) se mantiene.
+          {/*
+            CheckoutProvider va DENTRO de CartProvider porque
+            internamente usa useCart() para leer el carrito.
           */}
-          <main style={{ minHeight: "calc(100vh - 72px)", padding: "24px 32px" }}>
-            {children}
-          </main>
+          <CheckoutProvider>
+            {/* Header aparece en TODAS las páginas */}
+            <Header />
+
+            {/*
+              main contiene el contenido de la página actual.
+              Este {children} cambia según la ruta, pero el
+              layout (Header + Provider) se mantiene.
+            */}
+            <main style={{ minHeight: "calc(100vh - 72px)", padding: "24px 32px" }}>
+              {children}
+            </main>
+          </CheckoutProvider>
         </CartProvider>
       </body>
     </html>
