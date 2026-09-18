@@ -21,6 +21,9 @@ import { CartItem } from "@/types/product";
 interface CartContextType {
   cart: CartItem[]; // El array con los productos del carrito
   addToCart: (item: CartItem) => void;
+  removeFromCart: (id: number) => void;
+  clearCart: () => void;
+  getTotal: () => number;
 }
 
 // ------------------------------------------------------------
@@ -65,6 +68,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const removeFromCart = (id: number) => {
+  setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  };
+
+
+  const clearCart = () => {
+  setCart([]);
+  };
+
+  
+  const getTotal = (): number => {
+  return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
  
   // El Provider envuelve a sus children y les pasa los valores
   // a través de la prop "value".
@@ -73,6 +90,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       value={{
         cart,
         addToCart,
+        removeFromCart,
+        clearCart,
+        getTotal,
       }}
     >
       {children}
